@@ -474,8 +474,10 @@
     </div>
   </div>
 
-  <script type="module">
-    import { createConsentModal } from './src/index.ts'
+  <script src="https://cdn.jsdelivr.net/npm/@analytics-debugger/consent-modal/dist/dta-cm.umd.js"></script>
+  <script>
+    (async function() {
+    const { createConsentModal } = ConsentModal
 
     // ── State ──
 
@@ -490,12 +492,12 @@
 
     // ── Load all i18n JSON files ──
 
-    const localeFiles = import.meta.glob('./i18n/*.json', { eager: true })
+    const localeCodes = ['ast','ca','de','en','es','eu','fr','gl','it','ja','ko','ru','zh']
     const locales = {}
-    for (const [path, mod] of Object.entries(localeFiles)) {
-      const code = path.match(/\/([^/]+)\.json$/)?.[1]
-      if (code) locales[code] = mod.default || mod
-    }
+    await Promise.all(localeCodes.map(async (code) => {
+      const res = await fetch(`https://cdn.jsdelivr.net/npm/@analytics-debugger/consent-modal/i18n/${code}.json`)
+      locales[code] = await res.json()
+    }))
 
     // ── Helpers ──
 
@@ -778,6 +780,7 @@ ${catLines.replace(/^/gm, '  ')}
     // ── Init ──
     renderCategories()
     initModal()
+    })()
   </script>
 </body>
 </html>
