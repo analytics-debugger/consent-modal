@@ -14,6 +14,10 @@ Lightweight, framework-agnostic cookie consent modal with Shadow DOM encapsulati
 | Raw (UMD) | 14.9 KB |
 | Gzipped | **~5.1 KB** |
 
+
+<img width="738" height="557" alt="image" src="https://github.com/user-attachments/assets/da654758-a508-4c67-aecd-44f78c48c88b" />
+<img width="712" height="658" alt="image" src="https://github.com/user-attachments/assets/220c3b4a-41b6-48a1-8bfd-19ea767a50e1" />
+
 ## Features
 
 - **Shadow DOM encapsulation** -- styles are fully isolated; no CSS leaks in or out
