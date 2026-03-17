@@ -1,0 +1,105 @@
+name: Release & Publish
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+  id-token: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - run: bun install
+
+      - name: Typecheck
+        run: bun run typecheck
+
+      - name: Test with coverage
+        run: bun run test:coverage
+
+      - name: Build
+        run: bun run build
+
+      - name: Get version
+        id: version
+        run: echo "version=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+
+      - name: Get bundle sizes
+        id: sizes
+        run: |
+          esm_raw=$(wc -c < dist/dta-cm.js | tr -d ' ')
+          esm_gz=$(gzip -c dist/dta-cm.js | wc -c | tr -d ' ')
+          umd_raw=$(wc -c < dist/dta-cm.umd.js | tr -d ' ')
+          umd_gz=$(gzip -c dist/dta-cm.umd.js | wc -c | tr -d ' ')
+          echo "esm_raw=$esm_raw" >> $GITHUB_OUTPUT
+          echo "esm_gz=$esm_gz" >> $GITHUB_OUTPUT
+          echo "umd_raw=$umd_raw" >> $GITHUB_OUTPUT
+          echo "umd_gz=$umd_gz" >> $GITHUB_OUTPUT
+
+      - name: Get coverage
+        id: coverage
+        run: |
+          cov=$(bun run test:coverage 2>&1 | grep "All files" | awk '{print $4}')
+          echo "total=$cov" >> $GITHUB_OUTPUT
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: v${{ steps.version.outputs.version }}
+          body: |
+            ## @analytics-debugger/consent-modal v${{ steps.version.outputs.version }}
+
+            ### Bundle Size
+            | Build | Raw | Gzipped |
+            |---|---|---|
+            | ESM | ${{ steps.sizes.outputs.esm_raw }} B | ${{ steps.sizes.outputs.esm_gz }} B |
+            | UMD | ${{ steps.sizes.outputs.umd_raw }} B | ${{ steps.sizes.outputs.umd_gz }} B |
+
+            ### Tests & Coverage
+            - All tests passed
+            - Coverage: ${{ steps.coverage.outputs.total }}%
+
+            ### Install
+            ```bash
+            npm install @analytics-debugger/consent-modal@${{ steps.version.outputs.version }}
+            ```
+
+            ### CDN
+            ```html
+            <script src="https://cdn.jsdelivr.net/npm/@analytics-debugger/consent-modal@${{ steps.version.outputs.version }}/dist/dta-cm.umd.js"></script>
+            ```
+          files: |
+            dist/dta-cm.js
+            dist/dta-cm.umd.js
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Publish to npm
+        run: npm publish --access public --provenance
+
+      - name: Update README badge sizes
+        run: |
+          sed -i "s/| Raw (ESM) | .* |/| Raw (ESM) | $(echo "scale=1; ${{ steps.sizes.outputs.esm_raw }} / 1024" | bc) KB |/" README.md
+          sed -i "s/| Raw (UMD) | .* |/| Raw (UMD) | $(echo "scale=1; ${{ steps.sizes.outputs.umd_raw }} / 1024" | bc) KB |/" README.md
+          sed -i "s/| Gzipped | .* |/| Gzipped | **~$(echo "scale=1; ${{ steps.sizes.outputs.umd_gz }} / 1024" | bc) KB** |/" README.md
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add README.md
+          git diff --cached --quiet || git commit -m "docs: update bundle sizes for v${{ steps.version.outputs.version }}"
+          git push origin HEAD:main

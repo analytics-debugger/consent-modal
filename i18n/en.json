@@ -1,0 +1,22 @@
+{
+  "texts": {
+    "heading": "Privacy comes first",
+    "subheading": "We respect your privacy and give you full control",
+    "descriptionP1": "This site uses cookies to keep things running smoothly and help us understand how we can improve. We only use what's necessary — no hidden trackers, no surprises.",
+    "descriptionP2": "You can accept everything, reject non-essential cookies, or customize your preferences to choose exactly what you're comfortable with.",
+    "acceptAll": "Sounds good, accept all \u2713",
+    "rejectAll": "Reject All",
+    "customize": "Let me choose",
+    "customizeHeading": "Choose your preferences",
+    "customizeSubheading": "Toggle what you're comfortable with",
+    "saveChoices": "Save my choices",
+    "back": "\u2190 Back",
+    "footerText": "You can change your mind anytime in our",
+    "privacyPolicyLink": "privacy policy"
+  },
+  "categories": {
+    "necessary": { "label": "Essential", "description": "These keep the site functional — remembering your preferences, keeping sessions secure, and making pages load correctly. Always on." },
+    "analytics": { "label": "Usage insights", "sublabel": "Performance Cookies", "description": "Helps us understand how the site is used — which pages are helpful, where visitors come from, and what we can improve." },
+    "marketing": { "label": "Personalization", "sublabel": "Targeting Cookies", "description": "Used for personalized advertising and remarketing. Your preference here gives you full control." }
+  }
+}

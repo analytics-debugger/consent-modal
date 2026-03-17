@@ -1,0 +1,22 @@
+{
+  "texts": {
+    "heading": "La privacy prima di tutto",
+    "subheading": "Rispettiamo la tua privacy e ti diamo il pieno controllo",
+    "descriptionP1": "Questo sito utilizza i cookie per funzionare correttamente e aiutarci a migliorare. Usiamo solo quelli necessari — nessun tracker nascosto, nessuna sorpresa.",
+    "descriptionP2": "Puoi accettare tutto, rifiutare i cookie non essenziali o personalizzare le tue preferenze.",
+    "acceptAll": "Accetta tutto \u2713",
+    "rejectAll": "Rifiuta tutto",
+    "customize": "Personalizza",
+    "customizeHeading": "Scegli le tue preferenze",
+    "customizeSubheading": "Attiva o disattiva ciò che preferisci",
+    "saveChoices": "Salva le mie scelte",
+    "back": "\u2190 Indietro",
+    "footerText": "Puoi cambiare idea in qualsiasi momento nella nostra",
+    "privacyPolicyLink": "informativa sulla privacy"
+  },
+  "categories": {
+    "necessary": { "label": "Essenziali", "description": "Mantengono il sito funzionante. Sempre attivi." },
+    "analytics": { "label": "Statistiche", "sublabel": "Cookie di prestazione", "description": "Ci aiutano a capire come viene utilizzato il sito." },
+    "marketing": { "label": "Personalizzazione", "sublabel": "Cookie di targeting", "description": "Utilizzati per pubblicità personalizzata." }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "texts": {
+    "heading": "La privacitat primer",
+    "subheading": "Respectem la teva privacitat i et donem control total",
+    "descriptionP1": "Aquest lloc web utilitza galetes per funcionar correctament i ajudar-nos a millorar. Només fem servir les necessàries — sense rastrejadors ocults, sense sorpreses.",
+    "descriptionP2": "Pots acceptar-ho tot, rebutjar les galetes no essencials, o personalitzar les teves preferències.",
+    "acceptAll": "Acceptar-ho tot \u2713",
+    "rejectAll": "Rebutjar-ho tot",
+    "customize": "Personalitzar",
+    "customizeHeading": "Tria les teves preferències",
+    "customizeSubheading": "Activa o desactiva el que prefereixis",
+    "saveChoices": "Desar preferències",
+    "back": "\u2190 Enrere",
+    "footerText": "Pots canviar d'opinió en qualsevol moment a la nostra",
+    "privacyPolicyLink": "política de privacitat"
+  },
+  "categories": {
+    "necessary": { "label": "Essencials", "description": "Mantenen el lloc web funcional. Sempre actives." },
+    "analytics": { "label": "Estadístiques", "sublabel": "Galetes de rendiment", "description": "Ens ajuden a entendre com s'utilitza el lloc web." },
+    "marketing": { "label": "Personalització", "sublabel": "Galetes de segmentació", "description": "Utilitzades per a publicitat personalitzada." }
+  }
+}
