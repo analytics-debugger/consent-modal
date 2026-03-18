@@ -30,7 +30,9 @@ jobs:
       - run: bun install
 
       - name: Build playground
-        run: bun vite build --config vite.config.playground.ts
+        run: |
+          bun vite build --config vite.config.playground.ts
+          cp -r i18n dist-playground/i18n
 
       - uses: actions/configure-pages@v5
 
