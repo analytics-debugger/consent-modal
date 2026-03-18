@@ -1,22 +1,31 @@
 {
-  "texts": {
-    "heading": "Pribatutasuna lehenik",
-    "subheading": "Zure pribatutasuna errespetatzen dugu eta kontrol osoa ematen dizugu",
-    "descriptionP1": "Webgune honek cookieak erabiltzen ditu ondo funtzionatzeko eta hobetzen laguntzeko. Beharrezkoak bakarrik erabiltzen ditugu — ez dago ezkutuko jarraitzailerik.",
-    "descriptionP2": "Guztiak onartu, ez-ezinbesteko cookieak baztertu edo zure lehentasunak pertsonalizatu ditzakezu.",
-    "acceptAll": "Guztiak onartu \u2713",
-    "rejectAll": "Guztiak baztertu",
-    "customize": "Pertsonalizatu",
-    "customizeHeading": "Aukeratu zure lehentasunak",
-    "customizeSubheading": "Aktibatu edo desaktibatu nahi duzuna",
-    "saveChoices": "Lehentasunak gorde",
-    "back": "\u2190 Atzera",
-    "footerText": "Edozein unetan alda dezakezu iritzia gure",
-    "privacyPolicyLink": "pribatutasun politikan"
-  },
+  "heading": "Pribatutasuna lehenik",
+  "subheading": "Zure pribatutasuna errespetatzen dugu eta kontrol osoa ematen dizugu",
+  "descriptionP1": "Webgune honek cookieak erabiltzen ditu ondo funtzionatzeko eta hobetzen laguntzeko. Beharrezkoak bakarrik erabiltzen ditugu — ez dago ezkutuko jarraitzailerik.",
+  "descriptionP2": "Guztiak onartu, ez-ezinbesteko cookieak baztertu edo zure lehentasunak pertsonalizatu ditzakezu.",
+  "acceptAll": "Guztiak onartu ✓",
+  "rejectAll": "Guztiak baztertu",
+  "customize": "Pertsonalizatu",
+  "customizeHeading": "Aukeratu zure lehentasunak",
+  "customizeSubheading": "Aktibatu edo desaktibatu nahi duzuna",
+  "saveChoices": "Lehentasunak gorde",
+  "back": "← Atzera",
+  "footerText": "Edozein unetan alda dezakezu iritzia gure",
+  "privacyPolicyLink": "pribatutasun politikan",
   "categories": {
-    "necessary": { "label": "Ezinbestekoak", "description": "Webgunea funtzionatzen mantentzen dute. Beti aktibatuta." },
-    "analytics": { "label": "Estatistikak", "sublabel": "Errendimendu cookieak", "description": "Webgunea nola erabiltzen den ulertzen laguntzen digute." },
-    "marketing": { "label": "Pertsonalizazioa", "sublabel": "Segmentazio cookieak", "description": "Publizitate pertsonalizaturako erabiltzen dira." }
+    "necessary": {
+      "label": "Ezinbestekoak",
+      "description": "Webgunea funtzionatzen mantentzen dute. Beti aktibatuta."
+    },
+    "analytics": {
+      "label": "Estatistikak",
+      "sublabel": "Errendimendu cookieak",
+      "description": "Webgunea nola erabiltzen den ulertzen laguntzen digute."
+    },
+    "marketing": {
+      "label": "Pertsonalizazioa",
+      "sublabel": "Segmentazio cookieak",
+      "description": "Publizitate pertsonalizaturako erabiltzen dira."
+    }
   }
 }

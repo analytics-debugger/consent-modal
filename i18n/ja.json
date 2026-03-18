@@ -1,22 +1,31 @@
 {
-  "texts": {
-    "heading": "プライバシーを最優先に",
-    "subheading": "お客様のプライバシーを尊重し、完全なコントロールを提供します",
-    "descriptionP1": "当サイトでは、円滑な運営と改善のためにCookieを使用しています。必要なものだけを使用し、隠れたトラッカーはありません。",
-    "descriptionP2": "すべて受け入れる、必須でないCookieを拒否する、またはお好みに合わせてカスタマイズすることができます。",
-    "acceptAll": "すべて受け入れる \u2713",
-    "rejectAll": "すべて拒否",
-    "customize": "カスタマイズ",
-    "customizeHeading": "設定を選択",
-    "customizeSubheading": "お好みに合わせてオン・オフを切り替えてください",
-    "saveChoices": "設定を保存",
-    "back": "\u2190 戻る",
-    "footerText": "設定はいつでも変更できます。詳しくは",
-    "privacyPolicyLink": "プライバシーポリシー"
-  },
+  "heading": "プライバシーを最優先に",
+  "subheading": "お客様のプライバシーを尊重し、完全なコントロールを提供します",
+  "descriptionP1": "当サイトでは、円滑な運営と改善のためにCookieを使用しています。必要なものだけを使用し、隠れたトラッカーはありません。",
+  "descriptionP2": "すべて受け入れる、必須でないCookieを拒否する、またはお好みに合わせてカスタマイズすることができます。",
+  "acceptAll": "すべて受け入れる ✓",
+  "rejectAll": "すべて拒否",
+  "customize": "カスタマイズ",
+  "customizeHeading": "設定を選択",
+  "customizeSubheading": "お好みに合わせてオン・オフを切り替えてください",
+  "saveChoices": "設定を保存",
+  "back": "← 戻る",
+  "footerText": "設定はいつでも変更できます。詳しくは",
+  "privacyPolicyLink": "プライバシーポリシー",
   "categories": {
-    "necessary": { "label": "必須", "description": "サイトの機能維持に必要です。常に有効です。" },
-    "analytics": { "label": "分析", "sublabel": "パフォーマンスCookie", "description": "サイトの利用状況を把握し、改善に役立てます。" },
-    "marketing": { "label": "パーソナライズ", "sublabel": "ターゲティングCookie", "description": "パーソナライズされた広告に使用されます。" }
+    "necessary": {
+      "label": "必須",
+      "description": "サイトの機能維持に必要です。常に有効です。"
+    },
+    "analytics": {
+      "label": "分析",
+      "sublabel": "パフォーマンスCookie",
+      "description": "サイトの利用状況を把握し、改善に役立てます。"
+    },
+    "marketing": {
+      "label": "パーソナライズ",
+      "sublabel": "ターゲティングCookie",
+      "description": "パーソナライズされた広告に使用されます。"
+    }
   }
 }

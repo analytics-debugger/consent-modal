@@ -1,22 +1,31 @@
 {
-  "texts": {
-    "heading": "A privacidade primeiro",
-    "subheading": "Respectamos a túa privacidade e dámosche control total",
-    "descriptionP1": "Este sitio web usa cookies para funcionar correctamente e axudarnos a mellorar. Só usamos as necesarias — sen rastrexadores ocultos, sen sorpresas.",
-    "descriptionP2": "Podes aceptar todo, rexeitar as cookies non esenciais, ou personalizar as túas preferencias.",
-    "acceptAll": "Aceptar todo \u2713",
-    "rejectAll": "Rexeitar todo",
-    "customize": "Personalizar",
-    "customizeHeading": "Elixe as túas preferencias",
-    "customizeSubheading": "Activa ou desactiva o que prefiras",
-    "saveChoices": "Gardar preferencias",
-    "back": "\u2190 Volver",
-    "footerText": "Podes cambiar de opinión en calquera momento na nosa",
-    "privacyPolicyLink": "política de privacidade"
-  },
+  "heading": "A privacidade primeiro",
+  "subheading": "Respectamos a túa privacidade e dámosche control total",
+  "descriptionP1": "Este sitio web usa cookies para funcionar correctamente e axudarnos a mellorar. Só usamos as necesarias — sen rastrexadores ocultos, sen sorpresas.",
+  "descriptionP2": "Podes aceptar todo, rexeitar as cookies non esenciais, ou personalizar as túas preferencias.",
+  "acceptAll": "Aceptar todo ✓",
+  "rejectAll": "Rexeitar todo",
+  "customize": "Personalizar",
+  "customizeHeading": "Elixe as túas preferencias",
+  "customizeSubheading": "Activa ou desactiva o que prefiras",
+  "saveChoices": "Gardar preferencias",
+  "back": "← Volver",
+  "footerText": "Podes cambiar de opinión en calquera momento na nosa",
+  "privacyPolicyLink": "política de privacidade",
   "categories": {
-    "necessary": { "label": "Esenciais", "description": "Manteñen o sitio web funcional. Sempre activas." },
-    "analytics": { "label": "Estatísticas", "sublabel": "Cookies de rendemento", "description": "Axúdannos a entender como se usa o sitio web." },
-    "marketing": { "label": "Personalización", "sublabel": "Cookies de segmentación", "description": "Usadas para publicidade personalizada." }
+    "necessary": {
+      "label": "Esenciais",
+      "description": "Manteñen o sitio web funcional. Sempre activas."
+    },
+    "analytics": {
+      "label": "Estatísticas",
+      "sublabel": "Cookies de rendemento",
+      "description": "Axúdannos a entender como se usa o sitio web."
+    },
+    "marketing": {
+      "label": "Personalización",
+      "sublabel": "Cookies de segmentación",
+      "description": "Usadas para publicidade personalizada."
+    }
   }
 }

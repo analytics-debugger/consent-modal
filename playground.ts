@@ -23,7 +23,7 @@ await Promise.all(localeCodes.map(async (code) => {
 }))
 
 // Snapshot English defaults for diff comparison in code generation
-const enDefaults = { ...locales['en']?.texts }
+const { categories: _c, ...enDefaults } = locales['en'] || {}
 
 // ── Helpers ──
 
@@ -87,16 +87,16 @@ function generateCode() {
 
   syncTextsToLocale()
   let localesBlock = ''
-  const currentTexts = locales[locale]?.texts as Record<string, string> | undefined
-  if (currentTexts) {
+  const { categories: _cats, ...currentTexts } = (locales[locale] || {}) as Record<string, any>
+  if (Object.keys(currentTexts).length) {
     // For English, only include texts that differ from built-in defaults
-    const defaultTexts = locale === 'en' ? enDefaults : {}
+    const defaultTexts = locale === 'en' ? enDefaults : {} as Record<string, any>
     const textEntries = Object.entries(currentTexts)
-      .filter(([k, val]) => val && val !== (defaultTexts as any)[k])
-      .map(([k, val]) => `      ${k}: '${val.replace(/'/g, "\\'")}'`)
+      .filter(([k, val]) => val && val !== defaultTexts[k])
+      .map(([k, val]) => `      ${k}: '${String(val).replace(/'/g, "\\'")}'`)
       .join(',\n')
     if (textEntries) {
-      localesBlock = `\n  locales: {\n    '${locale}': {\n      texts: {\n${textEntries}\n      }\n    }\n  },`
+      localesBlock = `\n  locales: {\n    '${locale}': {\n${textEntries}\n    }\n  },`
     }
   }
 
@@ -136,7 +136,7 @@ ${catLines.replace(/^/gm, '  ')}
 function syncTextsToLocale() {
   const code = ($('cfg-locale') as HTMLSelectElement).value
   if (!locales[code]) locales[code] = {}
-  locales[code].texts = {
+  Object.assign(locales[code], {
     heading: ($('txt-heading') as HTMLInputElement).value,
     subheading: ($('txt-subheading') as HTMLInputElement).value,
     descriptionP1: ($('txt-p1') as HTMLTextAreaElement).value,
@@ -150,7 +150,7 @@ function syncTextsToLocale() {
     back: ($('txt-back') as HTMLInputElement).value,
     footerText: ($('txt-footerText') as HTMLInputElement).value,
     privacyPolicyLink: ($('txt-privacyPolicyLink') as HTMLInputElement).value,
-  }
+  })
 }
 
 function getConfig() {
@@ -296,7 +296,7 @@ document.querySelectorAll('.switch').forEach(btn => {
 
 // Locale change: update text inputs from locale data, then rebuild
 function syncTextsFromLocale(code: string) {
-  const data = locales[code]?.texts || {}
+  const data = locales[code] || {} as any
   const map: Record<string, string> = {
     'txt-heading': data.heading || '',
     'txt-subheading': data.subheading || '',

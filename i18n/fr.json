@@ -1,22 +1,31 @@
 {
-  "texts": {
-    "heading": "Votre vie privée d'abord",
-    "subheading": "Nous respectons votre vie privée et vous donnons un contrôle total",
-    "descriptionP1": "Ce site utilise des cookies pour fonctionner correctement et nous aider à nous améliorer. Nous n'utilisons que le nécessaire — pas de traqueurs cachés, pas de surprises.",
-    "descriptionP2": "Vous pouvez tout accepter, refuser les cookies non essentiels, ou personnaliser vos préférences.",
-    "acceptAll": "Tout accepter \u2713",
-    "rejectAll": "Tout refuser",
-    "customize": "Personnaliser",
-    "customizeHeading": "Choisissez vos préférences",
-    "customizeSubheading": "Activez ou désactivez selon vos souhaits",
-    "saveChoices": "Enregistrer mes choix",
-    "back": "\u2190 Retour",
-    "footerText": "Vous pouvez changer d'avis à tout moment dans notre",
-    "privacyPolicyLink": "politique de confidentialité"
-  },
+  "heading": "Votre vie privée d'abord",
+  "subheading": "Nous respectons votre vie privée et vous donnons un contrôle total",
+  "descriptionP1": "Ce site utilise des cookies pour fonctionner correctement et nous aider à nous améliorer. Nous n'utilisons que le nécessaire — pas de traqueurs cachés, pas de surprises.",
+  "descriptionP2": "Vous pouvez tout accepter, refuser les cookies non essentiels, ou personnaliser vos préférences.",
+  "acceptAll": "Tout accepter ✓",
+  "rejectAll": "Tout refuser",
+  "customize": "Personnaliser",
+  "customizeHeading": "Choisissez vos préférences",
+  "customizeSubheading": "Activez ou désactivez selon vos souhaits",
+  "saveChoices": "Enregistrer mes choix",
+  "back": "← Retour",
+  "footerText": "Vous pouvez changer d'avis à tout moment dans notre",
+  "privacyPolicyLink": "politique de confidentialité",
   "categories": {
-    "necessary": { "label": "Essentiels", "description": "Maintiennent le site fonctionnel. Toujours actifs." },
-    "analytics": { "label": "Statistiques", "sublabel": "Cookies de performance", "description": "Nous aident à comprendre comment le site est utilisé." },
-    "marketing": { "label": "Marketing", "sublabel": "Cookies de ciblage", "description": "Utilisés pour la publicité personnalisée." }
+    "necessary": {
+      "label": "Essentiels",
+      "description": "Maintiennent le site fonctionnel. Toujours actifs."
+    },
+    "analytics": {
+      "label": "Statistiques",
+      "sublabel": "Cookies de performance",
+      "description": "Nous aident à comprendre comment le site est utilisé."
+    },
+    "marketing": {
+      "label": "Marketing",
+      "sublabel": "Cookies de ciblage",
+      "description": "Utilisés pour la publicité personnalisée."
+    }
   }
 }

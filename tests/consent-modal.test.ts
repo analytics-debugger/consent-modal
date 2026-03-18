@@ -325,8 +325,8 @@ describe('ConsentModal', () => {
     const modal = new ConsentModal(makeOptions({
       defaultLocale: 'en',
       locales: {
-        en: { texts: { heading: 'English' } },
-        es: { texts: { heading: 'Espanol' } },
+        en: { heading: 'English' },
+        es: { heading: 'Espanol' },
       },
     }))
 
@@ -348,7 +348,7 @@ describe('ConsentModal', () => {
     const modal = new ConsentModal(makeOptions({
       detectLocale: true,
       locales: {
-        es: { texts: { heading: 'Hola' } },
+        es: { heading: 'Hola' },
       },
     }))
     expect(modal.getLocale()).toBe('es')
@@ -359,7 +359,7 @@ describe('ConsentModal', () => {
     const langSpy = vi.spyOn(navigator, 'language', 'get').mockReturnValue('xx-XX')
     const modal = new ConsentModal(makeOptions({
       detectLocale: true,
-      locales: { es: { texts: { heading: 'Hola' } } },
+      locales: { es: { heading: 'Hola' } },
     }))
     expect(modal.getLocale()).toBe('en')
     langSpy.mockRestore()

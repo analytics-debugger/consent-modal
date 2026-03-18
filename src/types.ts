@@ -34,8 +34,7 @@ export interface ConsentCategoryTranslation {
   description: string
 }
 
-export interface ConsentLocale {
-  texts?: ConsentTexts
+export interface ConsentLocale extends ConsentTexts {
   categories?: Record<string, ConsentCategoryTranslation>
 }
 

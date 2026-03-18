@@ -84,7 +84,9 @@ export class ConsentModal {
 
   private resolveTexts(): ConsentTexts {
     const localeData = this.getLocaleData()
-    return localeData?.texts || {}
+    if (!localeData) return {}
+    const { categories, ...texts } = localeData
+    return texts
   }
 
   private resolveCategories(): ConsentCategory[] {
