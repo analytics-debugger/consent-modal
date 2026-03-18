@@ -1,6 +1,6 @@
 {
   "name": "@analytics-debugger/consent-modal",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Lightweight cookie consent modal with Shadow DOM encapsulation, Google Consent Mode v2, i18n, and dark mode. Zero dependencies, ~6KB gzipped.",
   "type": "module",
   "main": "dist/dta-cm.umd.js",
