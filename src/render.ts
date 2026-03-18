@@ -64,10 +64,10 @@ function buildHTML(o: RenderOptions): string {
     ? `<p class="cm-footer">${g(t,'footerText')} <a href="${o.privacyPolicyUrl}" target="_blank" rel="noopener">${g(t,'privacyPolicyLink')}</a></p>`
     : ''
   const close = o.canDismiss
-    ? `<button class="cm-close" data-dta-cm-close><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>`
+    ? `<button class="cm-close" data-consent-close><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>`
     : ''
 
-  return `${close}<div class="cm-content"><div data-dta-cm-screen="main"><div class="cm-header">${logo}<h3 class="cm-heading">${g(t,'heading')}</h3><p class="cm-subheading">${g(t,'subheading')}</p></div><div class="cm-desc"><p>${g(t,'descriptionP1')}</p><p>${g(t,'descriptionP2')}</p></div><div class="cm-actions"><button class="cm-btn cm-btn-primary" data-dta-cm-accept>${g(t,'acceptAll')}</button><div class="cm-actions-row"><button class="cm-btn cm-btn-secondary" data-dta-cm-reject>${g(t,'rejectAll')}</button><button class="cm-btn cm-btn-secondary" data-dta-cm-customize>${g(t,'customize')}</button></div></div></div><div data-dta-cm-screen="details" style="display:none"><div class="cm-header"><h3 class="cm-heading">${g(t,'customizeHeading')}</h3><p class="cm-subheading">${g(t,'customizeSubheading')}</p></div><div class="cm-categories">${o.categories.map(c => renderCat(c, o.state)).join('')}</div><div class="cm-actions"><button class="cm-btn cm-btn-primary" data-dta-cm-save>${g(t,'saveChoices')}</button><button class="cm-btn cm-btn-ghost" data-dta-cm-back>${g(t,'back')}</button></div></div>${footer}</div>`
+  return `${close}<div class="cm-content"><div data-consent-screen="main"><div class="cm-header">${logo}<h3 class="cm-heading">${g(t,'heading')}</h3><p class="cm-subheading">${g(t,'subheading')}</p></div><div class="cm-desc"><p>${g(t,'descriptionP1')}</p><p>${g(t,'descriptionP2')}</p></div><div class="cm-actions"><button class="cm-btn cm-btn-primary" data-consent-accept>${g(t,'acceptAll')}</button><div class="cm-actions-row"><button class="cm-btn cm-btn-secondary" data-consent-reject>${g(t,'rejectAll')}</button><button class="cm-btn cm-btn-secondary" data-consent-customize>${g(t,'customize')}</button></div></div></div><div data-consent-screen="details" style="display:none"><div class="cm-header"><h3 class="cm-heading">${g(t,'customizeHeading')}</h3><p class="cm-subheading">${g(t,'customizeSubheading')}</p></div><div class="cm-categories">${o.categories.map(c => renderCat(c, o.state)).join('')}</div><div class="cm-actions"><button class="cm-btn cm-btn-primary" data-consent-save>${g(t,'saveChoices')}</button><button class="cm-btn cm-btn-ghost" data-consent-back>${g(t,'back')}</button></div></div>${footer}</div>`
 }
 
 export function createDOM(o: RenderOptions): {
@@ -105,19 +105,19 @@ export function createDOM(o: RenderOptions): {
 
   const $ = (s: string) => sh.querySelector(s) as HTMLElement | null
 
-  $('[data-dta-cm-close]')?.addEventListener('click', o.onDismiss)
-  $('[data-dta-cm-accept]')?.addEventListener('click', o.onAcceptAll)
-  $('[data-dta-cm-reject]')?.addEventListener('click', o.onRejectAll)
-  $('[data-dta-cm-save]')?.addEventListener('click', o.onSave)
-  $('[data-dta-cm-customize]')?.addEventListener('click', () => showDetails())
-  $('[data-dta-cm-back]')?.addEventListener('click', () => showMain())
+  $('[data-consent-close]')?.addEventListener('click', o.onDismiss)
+  $('[data-consent-accept]')?.addEventListener('click', o.onAcceptAll)
+  $('[data-consent-reject]')?.addEventListener('click', o.onRejectAll)
+  $('[data-consent-save]')?.addEventListener('click', o.onSave)
+  $('[data-consent-customize]')?.addEventListener('click', () => showDetails())
+  $('[data-consent-back]')?.addEventListener('click', () => showMain())
 
-  sh.querySelectorAll<HTMLElement>('[data-dta-cm-toggle]').forEach(btn => {
-    btn.addEventListener('click', () => o.onToggle(btn.dataset.dtaCmToggle!))
+  sh.querySelectorAll<HTMLElement>('[data-consent-toggle]').forEach(btn => {
+    btn.addEventListener('click', () => o.onToggle(btn.dataset.consentToggle!))
   })
 
-  const mainScreen = $('[data-dta-cm-screen="main"]')!
-  const detailsScreen = $('[data-dta-cm-screen="details"]')!
+  const mainScreen = $('[data-consent-screen="main"]')!
+  const detailsScreen = $('[data-consent-screen="details"]')!
 
   function showMain() {
     cd.classList.remove('cm-details')
@@ -132,9 +132,9 @@ export function createDOM(o: RenderOptions): {
   }
 
   function updateToggles() {
-    sh.querySelectorAll<HTMLElement>('[data-dta-cm-toggle]').forEach(btn => {
-      const k = btn.dataset.dtaCmToggle!
-      const el = sh.querySelector(`[data-dta-cm-cat="${k}"]`)
+    sh.querySelectorAll<HTMLElement>('[data-consent-toggle]').forEach(btn => {
+      const k = btn.dataset.consentToggle!
+      const el = sh.querySelector(`[data-consent-cat="${k}"]`)
       if (o.state[k]) {
         btn.classList.add('cm-toggle-on')
         el?.classList.add('cm-category-on')

@@ -80,7 +80,7 @@ describe('ConsentModal', () => {
     modal.show()
 
     const shadow = document.body.querySelector('#consent-modal-root')!.shadowRoot!
-    ;(shadow.querySelector('[data-dta-cm-accept]') as HTMLElement).click()
+    ;(shadow.querySelector('[data-consent-accept]') as HTMLElement).click()
 
     const state = modal.getState()
     expect(state.necessary).toBe(true)
@@ -94,7 +94,7 @@ describe('ConsentModal', () => {
     modal.show()
 
     const shadow = document.body.querySelector('#consent-modal-root')!.shadowRoot!
-    ;(shadow.querySelector('[data-dta-cm-reject]') as HTMLElement).click()
+    ;(shadow.querySelector('[data-consent-reject]') as HTMLElement).click()
 
     expect(modal.getState()).toEqual({ necessary: true, analytics: false, marketing: false })
   })
@@ -104,7 +104,7 @@ describe('ConsentModal', () => {
     modal.show()
 
     const shadow = document.body.querySelector('#consent-modal-root')!.shadowRoot!
-    const toggle = shadow.querySelector('[data-dta-cm-toggle="analytics"]') as HTMLElement
+    const toggle = shadow.querySelector('[data-consent-toggle="analytics"]') as HTMLElement
 
     expect(modal.getState().analytics).toBe(false)
     toggle.click()
@@ -118,7 +118,7 @@ describe('ConsentModal', () => {
     modal.show()
 
     const shadow = document.body.querySelector('#consent-modal-root')!.shadowRoot!
-    const toggle = shadow.querySelector('[data-dta-cm-toggle="necessary"]') as HTMLElement
+    const toggle = shadow.querySelector('[data-consent-toggle="necessary"]') as HTMLElement
     if (toggle) toggle.click()
     expect(modal.getState().necessary).toBe(true)
   })
@@ -155,7 +155,7 @@ describe('ConsentModal', () => {
     modal.show()
 
     const shadow = document.body.querySelector('#consent-modal-root')!.shadowRoot!
-    ;(shadow.querySelector('[data-dta-cm-accept]') as HTMLElement).click()
+    ;(shadow.querySelector('[data-consent-accept]') as HTMLElement).click()
 
     expect(onAcceptAll).toHaveBeenCalledWith(expect.objectContaining({ necessary: true, analytics: true, marketing: true }))
   })
@@ -166,7 +166,7 @@ describe('ConsentModal', () => {
     modal.show()
 
     const shadow = document.body.querySelector('#consent-modal-root')!.shadowRoot!
-    ;(shadow.querySelector('[data-dta-cm-reject]') as HTMLElement).click()
+    ;(shadow.querySelector('[data-consent-reject]') as HTMLElement).click()
 
     expect(onRejectAll).toHaveBeenCalledWith(expect.objectContaining({ necessary: true, analytics: false, marketing: false }))
   })
@@ -177,7 +177,7 @@ describe('ConsentModal', () => {
     modal.show()
 
     const shadow = document.body.querySelector('#consent-modal-root')!.shadowRoot!
-    ;(shadow.querySelector('[data-dta-cm-save]') as HTMLElement).click()
+    ;(shadow.querySelector('[data-consent-save]') as HTMLElement).click()
 
     expect(onSave).toHaveBeenCalledTimes(1)
   })
@@ -188,7 +188,7 @@ describe('ConsentModal', () => {
     modal.show()
 
     const shadow = document.body.querySelector('#consent-modal-root')!.shadowRoot!
-    ;(shadow.querySelector('[data-dta-cm-toggle="analytics"]') as HTMLElement).click()
+    ;(shadow.querySelector('[data-consent-toggle="analytics"]') as HTMLElement).click()
 
     expect(onChange).toHaveBeenCalledWith(expect.objectContaining({ analytics: true }))
   })
@@ -200,7 +200,7 @@ describe('ConsentModal', () => {
     const modal = new ConsentModal(makeOptions())
     modal.show()
     const shadow = document.body.querySelector('#consent-modal-root')!.shadowRoot!
-    ;(shadow.querySelector('[data-dta-cm-accept]') as HTMLElement).click()
+    ;(shadow.querySelector('[data-consent-accept]') as HTMLElement).click()
 
     const raw = document.cookie.match(/dta_consent=([^;]*)/)?.[1]
     const data = JSON.parse(decodeURIComponent(raw!))
@@ -220,13 +220,13 @@ describe('ConsentModal', () => {
 
     const modal = new ConsentModal(makeOptions({ cookieName }))
     modal.show()
-    ;(document.body.querySelector('#consent-modal-root')!.shadowRoot!.querySelector('[data-dta-cm-accept]') as HTMLElement).click()
+    ;(document.body.querySelector('#consent-modal-root')!.shadowRoot!.querySelector('[data-consent-accept]') as HTMLElement).click()
 
     nowMock.mockReturnValue(2000000)
     document.body.innerHTML = ''
     const modal2 = new ConsentModal(makeOptions({ cookieName }))
     modal2.show()
-    ;(document.body.querySelector('#consent-modal-root')!.shadowRoot!.querySelector('[data-dta-cm-accept]') as HTMLElement).click()
+    ;(document.body.querySelector('#consent-modal-root')!.shadowRoot!.querySelector('[data-consent-accept]') as HTMLElement).click()
 
     const raw = document.cookie.match(new RegExp(`${cookieName}=([^;]*)`))?.[1]
     const data = JSON.parse(decodeURIComponent(raw!))
@@ -247,7 +247,7 @@ describe('ConsentModal', () => {
     const modal = new ConsentModal(makeOptions())
     modal.show()
     const before = gtagCalls.length
-    ;(document.body.querySelector('#consent-modal-root')!.shadowRoot!.querySelector('[data-dta-cm-accept]') as HTMLElement).click()
+    ;(document.body.querySelector('#consent-modal-root')!.shadowRoot!.querySelector('[data-consent-accept]') as HTMLElement).click()
     expect(gtagCalls.slice(before).find(c => c[0] === 'consent' && c[1] === 'update')).toBeDefined()
   })
 
@@ -315,7 +315,7 @@ describe('ConsentModal', () => {
     modal.show()
     const shadow = document.body.querySelector('#consent-modal-root')!.shadowRoot!
     // Close button should not exist when blockNavigation + no saved consent
-    const closeBtn = shadow.querySelector('[data-dta-cm-close]')
+    const closeBtn = shadow.querySelector('[data-consent-close]')
     expect(closeBtn).toBeNull()
   })
 
@@ -390,8 +390,8 @@ describe('ConsentModal', () => {
     modal.showSettings()
 
     const shadow = document.body.querySelector('#consent-modal-root')!.shadowRoot!
-    const mainScreen = shadow.querySelector('[data-dta-cm-screen="main"]') as HTMLElement
-    const detailsScreen = shadow.querySelector('[data-dta-cm-screen="details"]') as HTMLElement
+    const mainScreen = shadow.querySelector('[data-consent-screen="main"]') as HTMLElement
+    const detailsScreen = shadow.querySelector('[data-consent-screen="details"]') as HTMLElement
     expect(mainScreen.style.display).toBe('none')
     expect(detailsScreen.style.display).toBe('')
   })
@@ -410,9 +410,9 @@ describe('ConsentModal', () => {
     modal.show()
 
     const shadow = document.body.querySelector('#consent-modal-root')!.shadowRoot!
-    ;(shadow.querySelector('[data-dta-cm-customize]') as HTMLElement).click()
+    ;(shadow.querySelector('[data-consent-customize]') as HTMLElement).click()
 
-    const mainScreen = shadow.querySelector('[data-dta-cm-screen="main"]') as HTMLElement
+    const mainScreen = shadow.querySelector('[data-consent-screen="main"]') as HTMLElement
     expect(mainScreen.style.display).toBe('none')
   })
 
@@ -421,10 +421,10 @@ describe('ConsentModal', () => {
     modal.show()
 
     const shadow = document.body.querySelector('#consent-modal-root')!.shadowRoot!
-    ;(shadow.querySelector('[data-dta-cm-customize]') as HTMLElement).click()
-    ;(shadow.querySelector('[data-dta-cm-back]') as HTMLElement).click()
+    ;(shadow.querySelector('[data-consent-customize]') as HTMLElement).click()
+    ;(shadow.querySelector('[data-consent-back]') as HTMLElement).click()
 
-    const mainScreen = shadow.querySelector('[data-dta-cm-screen="main"]') as HTMLElement
+    const mainScreen = shadow.querySelector('[data-consent-screen="main"]') as HTMLElement
     expect(mainScreen.style.display).toBe('')
   })
 
@@ -453,7 +453,7 @@ describe('ConsentModal', () => {
     new ConsentModal(makeOptions())
     window.dispatchEvent(new Event('consent-modal:settings'))
     const shadow = document.body.querySelector('#consent-modal-root')!.shadowRoot!
-    const details = shadow.querySelector('[data-dta-cm-screen="details"]') as HTMLElement
+    const details = shadow.querySelector('[data-consent-screen="details"]') as HTMLElement
     expect(details.style.display).toBe('')
     rafSpy.mockRestore()
   })
@@ -490,7 +490,7 @@ describe('ConsentModal', () => {
   it('uses custom cookie name', () => {
     const modal = new ConsentModal(makeOptions({ cookieName: 'my_custom_consent' }))
     modal.show()
-    ;(document.body.querySelector('#consent-modal-root')!.shadowRoot!.querySelector('[data-dta-cm-accept]') as HTMLElement).click()
+    ;(document.body.querySelector('#consent-modal-root')!.shadowRoot!.querySelector('[data-consent-accept]') as HTMLElement).click()
     expect(document.cookie).toContain('my_custom_consent=')
   })
 
