@@ -97,7 +97,7 @@ ${catLines}
   onChange: (state) => console.log('Consent changed:', state),
 })`
 
-  $('code-cdn').textContent = `<script src="https://unpkg.com/@analytics-debugger/consent-modal"><\/script>
+  $('code-cdn').textContent = `<script src="https://cdn.jsdelivr.net/npm/@analytics-debugger/consent-modal/dist/dta-cm.umd.js"><\/script>
 <script>
   var modal = ConsentModal.createConsentModal({
     categories: [
