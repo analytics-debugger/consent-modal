@@ -1,8 +1,6 @@
 {
   "heading": "La privacitat primer",
   "subheading": "Respectem la teva privacitat i et donem control total",
-  "descriptionP1": "Aquest lloc web utilitza galetes per funcionar correctament i ajudar-nos a millorar. Només fem servir les necessàries — sense rastrejadors ocults, sense sorpreses.",
-  "descriptionP2": "Pots acceptar-ho tot, rebutjar les galetes no essencials, o personalitzar les teves preferències.",
   "acceptAll": "Acceptar-ho tot ✓",
   "rejectAll": "Rebutjar-ho tot",
   "customize": "Personalitzar",
@@ -15,17 +13,21 @@
   "categories": {
     "necessary": {
       "label": "Essencials",
-      "description": "Mantenen el lloc web funcional. Sempre actives."
+      "description": "Mantenen el lloc web funcional. Sempre actives.",
+      "emoji": "🛡️"
     },
     "analytics": {
       "label": "Estadístiques",
       "sublabel": "Galetes de rendiment",
-      "description": "Ens ajuden a entendre com s'utilitza el lloc web."
+      "description": "Ens ajuden a entendre com s'utilitza el lloc web.",
+      "emoji": "📊"
     },
     "marketing": {
       "label": "Personalització",
       "sublabel": "Galetes de segmentació",
-      "description": "Utilitzades per a publicitat personalitzada."
+      "description": "Utilitzades per a publicitat personalitzada.",
+      "emoji": "🎯"
     }
-  }
+  },
+  "description": "<p>Aquest lloc web utilitza galetes per funcionar correctament i ajudar-nos a millorar. Només fem servir les necessàries — sense rastrejadors ocults, sense sorpreses.</p><p>Pots acceptar-ho tot, rebutjar les galetes no essencials, o personalitzar les teves preferències.</p>"
 }

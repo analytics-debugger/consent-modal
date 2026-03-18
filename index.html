@@ -336,15 +336,9 @@
             <label>Subheading</label>
             <input type="text" id="txt-subheading" value="We respect your privacy and give you full control">
           </div>
-          <div class="row">
-            <div class="field">
-              <label>Description P1</label>
-              <textarea id="txt-p1">This site uses cookies to keep things running smoothly and help us understand how we can improve.</textarea>
-            </div>
-            <div class="field">
-              <label>Description P2</label>
-              <textarea id="txt-p2">You can accept everything, reject non-essential cookies, or customize your preferences.</textarea>
-            </div>
+          <div class="field">
+            <label>Description (HTML supported)</label>
+            <textarea id="txt-description" style="min-height:3rem"><p>This site uses cookies to keep things running smoothly and help us understand how we can improve.</p><p>You can accept everything, reject non-essential cookies, or customize your preferences.</p></textarea>
           </div>
           <div class="row">
             <div class="field">
@@ -440,7 +434,6 @@
       <div class="toolbar">
         <button class="btn primary" id="btn-show">Open Modal</button>
         <button class="btn" id="btn-settings">Open Settings</button>
-        <button class="btn" id="btn-apply">Apply Changes</button>
         <span class="spacer"></span>
         <button class="btn danger" id="btn-reset">Clear Cookie &amp; Reload</button>
       </div>

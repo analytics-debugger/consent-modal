@@ -1,4 +1,4 @@
-import type { ConsentCategory, ConsentState, ConsentTexts } from './types'
+import type { ConsentCategory, ConsentCategoryTranslation, ConsentState, ConsentTexts } from './types'
 import stylesCSS from './styles.css?raw'
 
 // Only the complex templates stay as files — small ones are inlined
@@ -7,8 +7,7 @@ import categoryHTML from '../templates/parts/category.html?raw'
 const D: ConsentTexts = {
   heading: 'Privacy comes first',
   subheading: 'We respect your privacy and give you full control',
-  descriptionP1: 'This site uses cookies to help us improve. We only use what\'s necessary.',
-  descriptionP2: 'Accept all, reject non-essential, or customize your preferences.',
+  description: 'This site uses cookies to help us improve. We only use what\'s necessary.',
   acceptAll: 'Accept all',
   rejectAll: 'Reject all',
   customize: 'Customize',
@@ -20,8 +19,10 @@ const D: ConsentTexts = {
   privacyPolicyLink: 'privacy policy',
 }
 
+type ResolvedCategory = ConsentCategory & ConsentCategoryTranslation
+
 interface RenderOptions {
-  categories: ConsentCategory[]
+  categories: ResolvedCategory[]
   state: ConsentState
   texts: ConsentTexts
   logoUrl?: string
@@ -43,7 +44,7 @@ function ip(tpl: string, v: Record<string, string>): string {
   return tpl.replace(/\{\{(\w+)\}\}/g, (_, k) => v[k] ?? '')
 }
 
-function renderCat(cat: ConsentCategory, state: ConsentState): string {
+function renderCat(cat: ResolvedCategory, state: ConsentState): string {
   const on = state[cat.key]
   return ip(categoryHTML, {
     key: cat.key,
@@ -67,7 +68,7 @@ function buildHTML(o: RenderOptions): string {
     ? `<button class="cm-close" data-consent-close><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>`
     : ''
 
-  return `${close}<div class="cm-content"><div data-consent-screen="main"><div class="cm-header">${logo}<h3 class="cm-heading">${g(t,'heading')}</h3><p class="cm-subheading">${g(t,'subheading')}</p></div><div class="cm-desc"><p>${g(t,'descriptionP1')}</p><p>${g(t,'descriptionP2')}</p></div><div class="cm-actions"><button class="cm-btn cm-btn-primary" data-consent-accept>${g(t,'acceptAll')}</button><div class="cm-actions-row"><button class="cm-btn cm-btn-secondary" data-consent-reject>${g(t,'rejectAll')}</button><button class="cm-btn cm-btn-secondary" data-consent-customize>${g(t,'customize')}</button></div></div></div><div data-consent-screen="details" style="display:none"><div class="cm-header"><h3 class="cm-heading">${g(t,'customizeHeading')}</h3><p class="cm-subheading">${g(t,'customizeSubheading')}</p></div><div class="cm-categories">${o.categories.map(c => renderCat(c, o.state)).join('')}</div><div class="cm-actions"><button class="cm-btn cm-btn-primary" data-consent-save>${g(t,'saveChoices')}</button><button class="cm-btn cm-btn-ghost" data-consent-back>${g(t,'back')}</button></div></div>${footer}</div>`
+  return `${close}<div class="cm-content"><div data-consent-screen="main"><div class="cm-header">${logo}<h3 class="cm-heading">${g(t,'heading')}</h3><p class="cm-subheading">${g(t,'subheading')}</p></div><div class="cm-desc">${g(t,'description')}</div><div class="cm-actions"><button class="cm-btn cm-btn-primary" data-consent-accept>${g(t,'acceptAll')}</button><div class="cm-actions-row"><button class="cm-btn cm-btn-secondary" data-consent-reject>${g(t,'rejectAll')}</button><button class="cm-btn cm-btn-secondary" data-consent-customize>${g(t,'customize')}</button></div></div></div><div data-consent-screen="details" style="display:none"><div class="cm-header"><h3 class="cm-heading">${g(t,'customizeHeading')}</h3><p class="cm-subheading">${g(t,'customizeSubheading')}</p></div><div class="cm-categories">${o.categories.map(c => renderCat(c, o.state)).join('')}</div><div class="cm-actions"><button class="cm-btn cm-btn-primary" data-consent-save>${g(t,'saveChoices')}</button><button class="cm-btn cm-btn-ghost" data-consent-back>${g(t,'back')}</button></div></div>${footer}</div>`
 }
 
 export function createDOM(o: RenderOptions): {
@@ -121,14 +122,34 @@ export function createDOM(o: RenderOptions): {
 
   function showMain() {
     cd.classList.remove('cm-details')
-    detailsScreen.style.display = 'none'
-    mainScreen.style.display = ''
+    detailsScreen.style.opacity = '0'
+    detailsScreen.style.transform = 'translateX(1rem)'
+    setTimeout(() => {
+      detailsScreen.style.display = 'none'
+      mainScreen.style.display = ''
+      mainScreen.style.opacity = '0'
+      mainScreen.style.transform = 'translateX(-1rem)'
+      requestAnimationFrame(() => {
+        mainScreen.style.opacity = '1'
+        mainScreen.style.transform = 'none'
+      })
+    }, 150)
   }
 
   function showDetails() {
     cd.classList.add('cm-details')
-    mainScreen.style.display = 'none'
-    detailsScreen.style.display = ''
+    mainScreen.style.opacity = '0'
+    mainScreen.style.transform = 'translateX(-1rem)'
+    setTimeout(() => {
+      mainScreen.style.display = 'none'
+      detailsScreen.style.display = ''
+      detailsScreen.style.opacity = '0'
+      detailsScreen.style.transform = 'translateX(1rem)'
+      requestAnimationFrame(() => {
+        detailsScreen.style.opacity = '1'
+        detailsScreen.style.transform = 'none'
+      })
+    }, 150)
   }
 
   function updateToggles() {

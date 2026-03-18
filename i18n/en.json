@@ -1,8 +1,6 @@
 {
   "heading": "Privacy comes first",
   "subheading": "We respect your privacy and give you full control",
-  "descriptionP1": "This site uses cookies to keep things running smoothly and help us understand how we can improve. We only use what's necessary — no hidden trackers, no surprises.",
-  "descriptionP2": "You can accept everything, reject non-essential cookies, or customize your preferences to choose exactly what you're comfortable with.",
   "acceptAll": "Sounds good, accept all ✓",
   "rejectAll": "Reject All",
   "customize": "Let me choose",
@@ -15,17 +13,21 @@
   "categories": {
     "necessary": {
       "label": "Essential",
-      "description": "These keep the site functional — remembering your preferences, keeping sessions secure, and making pages load correctly. Always on."
+      "description": "These keep the site functional — remembering your preferences, keeping sessions secure, and making pages load correctly. Always on.",
+      "emoji": "🛡️"
     },
     "analytics": {
       "label": "Usage insights",
       "sublabel": "Performance Cookies",
-      "description": "Helps us understand how the site is used — which pages are helpful, where visitors come from, and what we can improve."
+      "description": "Helps us understand how the site is used — which pages are helpful, where visitors come from, and what we can improve.",
+      "emoji": "📊"
     },
     "marketing": {
       "label": "Personalization",
       "sublabel": "Targeting Cookies",
-      "description": "Used for personalized advertising and remarketing. Your preference here gives you full control."
+      "description": "Used for personalized advertising and remarketing. Your preference here gives you full control.",
+      "emoji": "🎯"
     }
-  }
+  },
+  "description": "<p>This site uses cookies to keep things running smoothly and help us understand how we can improve. We only use what's necessary — no hidden trackers, no surprises.</p><p>You can accept everything, reject non-essential cookies, or customize your preferences to choose exactly what you're comfortable with.</p>"
 }

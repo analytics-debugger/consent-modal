@@ -5,9 +5,9 @@ import { createConsentModal } from './src/index'
 // ── State ──
 
 let categories = [
-  { key: 'necessary', label: 'Essential', sublabel: '', description: 'These keep the site functional. Always on.', emoji: '\uD83D\uDEE1\uFE0F', locked: true, default: true },
-  { key: 'analytics', label: 'Usage insights', sublabel: 'Performance Cookies', description: 'Helps us understand how the site is used.', emoji: '\uD83D\uDCCA', locked: false, default: false },
-  { key: 'marketing', label: 'Personalization', sublabel: 'Targeting Cookies', description: 'Used for personalized advertising.', emoji: '\uD83C\uDFAF', locked: false, default: false },
+  { key: 'necessary', locked: true, default: true },
+  { key: 'analytics', locked: false, default: false },
+  { key: 'marketing', locked: false, default: false },
 ]
 
 let modal: any = null
@@ -73,31 +73,46 @@ function generateCode() {
   const locale = ($('cfg-locale') as HTMLSelectElement).value
 
   const catLines = categories.map(c => {
-    const parts = [`key: '${c.key}'`, `label: '${c.label}'`]
-    if (c.sublabel) parts.push(`sublabel: '${c.sublabel}'`)
-    if (c.emoji) parts.push(`emoji: '${c.emoji}'`)
-    parts.push(`description: '${c.description}'`)
-    if (c.locked) parts.push('locked: true')
-    if (c.default) parts.push('default: true')
+    const parts = [`key: '${c.key}'`]
+    parts.push(`locked: ${!!c.locked}`)
+    parts.push(`default: ${!!c.default}`)
     return `    { ${parts.join(', ')} }`
   }).join(',\n')
 
   const logoLine = logo ? `\n  logoUrl: '${logo}',` : ''
   const localeLine = locale !== 'en' ? `\n  defaultLocale: '${locale}',` : ''
+  const detectLocaleLine = switchState($('cfg-detectlocale')) ? `\n  detectLocale: true,` : ''
+  const blockNavLine = switchState($('cfg-blocknavigation')) ? `\n  blockNavigation: true,` : ''
 
   syncTextsToLocale()
+  const localeData = (locales[locale] || {}) as Record<string, any>
+  const { categories: localeCats, ...currentTexts } = localeData
+
+  // Build text entries
+  const defaultTexts = locale === 'en' ? enDefaults : {} as Record<string, any>
+  const textEntries = Object.entries(currentTexts)
+    .filter(([k, val]) => val && val !== defaultTexts[k])
+    .map(([k, val]) => `      ${k}: '${String(val).replace(/'/g, "\\'")}'`)
+    .join(',\n')
+
+  // Build category entries
+  let catEntriesBlock = ''
+  if (localeCats && Object.keys(localeCats).length) {
+    const catEntries = Object.entries(localeCats as Record<string, any>).map(([key, cat]) => {
+      const props = []
+      if (cat.label) props.push(`label: '${cat.label.replace(/'/g, "\\'")}'`)
+      if (cat.sublabel) props.push(`sublabel: '${cat.sublabel.replace(/'/g, "\\'")}'`)
+      if (cat.emoji) props.push(`emoji: '${cat.emoji}'`)
+      if (cat.description) props.push(`description: '${cat.description.replace(/'/g, "\\'")}'`)
+      return `        ${key}: { ${props.join(', ')} }`
+    }).join(',\n')
+    catEntriesBlock = `\n      categories: {\n${catEntries}\n      }`
+  }
+
   let localesBlock = ''
-  const { categories: _cats, ...currentTexts } = (locales[locale] || {}) as Record<string, any>
-  if (Object.keys(currentTexts).length) {
-    // For English, only include texts that differ from built-in defaults
-    const defaultTexts = locale === 'en' ? enDefaults : {} as Record<string, any>
-    const textEntries = Object.entries(currentTexts)
-      .filter(([k, val]) => val && val !== defaultTexts[k])
-      .map(([k, val]) => `      ${k}: '${String(val).replace(/'/g, "\\'")}'`)
-      .join(',\n')
-    if (textEntries) {
-      localesBlock = `\n  locales: {\n    '${locale}': {\n${textEntries}\n    }\n  },`
-    }
+  if (textEntries || catEntriesBlock) {
+    const parts = [textEntries, catEntriesBlock ? `      ${catEntriesBlock.trim()}` : ''].filter(Boolean).join(',\n')
+    localesBlock = `\n  locales: {\n    '${locale}': {\n${parts}\n    }\n  },`
   }
 
   $('code-esm').textContent = `import { createConsentModal } from '@analytics-debugger/consent-modal'
@@ -109,7 +124,7 @@ ${catLines}
   cookieName: '${cookie}',
   cookieDays: ${($('cfg-cookiedays') as HTMLInputElement).value},
   privacyPolicyUrl: '${privacy}',
-  accentColor: '${accent}',${logoLine}${localeLine}
+  accentColor: '${accent}',${logoLine}${localeLine}${detectLocaleLine}${blockNavLine}
   darkMode: ${darkMode},
   autoShow: true,${localesBlock}
   onChange: (state) => console.log('Consent changed:', state),
@@ -124,7 +139,7 @@ ${catLines.replace(/^/gm, '  ')}
     cookieName: '${cookie}',
     cookieDays: ${($('cfg-cookiedays') as HTMLInputElement).value},
     privacyPolicyUrl: '${privacy}',
-    accentColor: '${accent}',${logoLine}${localeLine}
+    accentColor: '${accent}',${logoLine}${localeLine}${detectLocaleLine}${blockNavLine}
     darkMode: ${darkMode},
     autoShow: true,${localesBlock.replace(/^/gm, '  ')}
   })
@@ -139,8 +154,7 @@ function syncTextsToLocale() {
   Object.assign(locales[code], {
     heading: ($('txt-heading') as HTMLInputElement).value,
     subheading: ($('txt-subheading') as HTMLInputElement).value,
-    descriptionP1: ($('txt-p1') as HTMLTextAreaElement).value,
-    descriptionP2: ($('txt-p2') as HTMLTextAreaElement).value,
+    description: ($('txt-description') as HTMLTextAreaElement).value,
     acceptAll: ($('txt-accept') as HTMLInputElement).value,
     rejectAll: ($('txt-reject') as HTMLInputElement).value,
     customize: ($('txt-customize') as HTMLInputElement).value,
@@ -157,7 +171,7 @@ function getConfig() {
   syncTextsToLocale()
   const darkVal = ($('cfg-darkmode') as HTMLSelectElement).value
   return {
-    categories: categories.filter(c => c.key && c.label),
+    categories: categories.filter(c => c.key),
     cookieName: ($('cfg-cookie') as HTMLInputElement).value,
     cookieDays: parseInt(($('cfg-cookiedays') as HTMLInputElement).value) || 365,
     privacyPolicyUrl: ($('cfg-privacy') as HTMLInputElement).value,
@@ -191,16 +205,30 @@ function initModal() {
 
 // ── Category editor ──
 
+function getCatTranslation(key: string): Record<string, string> {
+  const code = ($('cfg-locale') as HTMLSelectElement).value
+  return (locales[code]?.categories as any)?.[key] || {}
+}
+
+function setCatTranslation(key: string, field: string, value: string) {
+  const code = ($('cfg-locale') as HTMLSelectElement).value
+  if (!locales[code]) locales[code] = {}
+  if (!locales[code].categories) locales[code].categories = {} as any
+  if (!(locales[code].categories as any)[key]) (locales[code].categories as any)[key] = {} as any
+  ;(locales[code].categories as any)[key][field] = value
+}
+
 function renderCategories() {
   const list = $('categories-list')
   list.innerHTML = ''
 
   categories.forEach((cat, i) => {
+    const t = getCatTranslation(cat.key)
     const card = document.createElement('div')
     card.className = `cat-card${cat.locked ? ' locked' : ''}`
     card.innerHTML = `
       <div class="cat-header">
-        <strong>${cat.emoji || ''} ${cat.label || 'New Category'}</strong>
+        <strong>${t.emoji || ''} ${t.label || cat.key}</strong>
         <div class="cat-actions">
           ${i > 0 ? `<button class="icon-btn" onclick="moveCategory(${i}, -1)" title="Move up">\u2191</button>` : ''}
           ${i < categories.length - 1 ? `<button class="icon-btn" onclick="moveCategory(${i}, 1)" title="Move down">\u2193</button>` : ''}
@@ -214,19 +242,19 @@ function renderCategories() {
         </div>
         <div class="field">
           <label>Emoji</label>
-          <input type="text" value="${cat.emoji || ''}" onchange="updateCategory(${i}, 'emoji', this.value)">
+          <input type="text" value="${t.emoji || ''}" onchange="updateCatText(${i}, 'emoji', this.value)">
         </div>
         <div class="field">
           <label>Label</label>
-          <input type="text" value="${cat.label}" onchange="updateCategory(${i}, 'label', this.value)">
+          <input type="text" value="${t.label || ''}" onchange="updateCatText(${i}, 'label', this.value)">
         </div>
         <div class="field">
           <label>Sublabel</label>
-          <input type="text" value="${cat.sublabel || ''}" onchange="updateCategory(${i}, 'sublabel', this.value)">
+          <input type="text" value="${t.sublabel || ''}" onchange="updateCatText(${i}, 'sublabel', this.value)">
         </div>
         <div class="field full">
           <label>Description</label>
-          <textarea onchange="updateCategory(${i}, 'description', this.value)">${cat.description}</textarea>
+          <textarea onchange="updateCatText(${i}, 'description', this.value)">${t.description || ''}</textarea>
         </div>
       </div>
       ${!cat.locked ? `
@@ -241,6 +269,12 @@ function renderCategories() {
 
 ;(window as any).updateCategory = (i: number, field: string, value: any) => {
   ;(categories[i] as any)[field] = value
+  renderCategories()
+  generateCode()
+}
+
+;(window as any).updateCatText = (i: number, field: string, value: string) => {
+  setCatTranslation(categories[i].key, field, value)
   if (field === 'label' || field === 'emoji') renderCategories()
   generateCode()
 }
@@ -265,15 +299,15 @@ function renderCategories() {
 // Add category
 $('add-category').addEventListener('click', () => {
   const n = categories.length
+  const key = `category_${n}`
   categories.push({
-    key: `category_${n}`,
-    label: `Category ${n + 1}`,
-    sublabel: '',
-    description: 'Describe what this category is used for.',
-    emoji: '\uD83D\uDD27',
+    key,
     locked: false,
     default: false,
   })
+  setCatTranslation(key, 'label', `Category ${n + 1}`)
+  setCatTranslation(key, 'emoji', '\uD83D\uDD27')
+  setCatTranslation(key, 'description', 'Describe what this category is used for.')
   renderCategories()
   generateCode()
 })
@@ -291,7 +325,7 @@ $('cfg-color').addEventListener('input', (e) => {
 
 // Toggle switches
 document.querySelectorAll('.switch').forEach(btn => {
-  btn.addEventListener('click', () => toggleSwitch(btn))
+  btn.addEventListener('click', () => { toggleSwitch(btn); generateCode() })
 })
 
 // Locale change: update text inputs from locale data, then rebuild
@@ -300,8 +334,7 @@ function syncTextsFromLocale(code: string) {
   const map: Record<string, string> = {
     'txt-heading': data.heading || '',
     'txt-subheading': data.subheading || '',
-    'txt-p1': data.descriptionP1 || '',
-    'txt-p2': data.descriptionP2 || '',
+    'txt-description': data.description || '',
     'txt-accept': data.acceptAll || '',
     'txt-reject': data.rejectAll || '',
     'txt-customize': data.customize || '',
@@ -319,13 +352,13 @@ function syncTextsFromLocale(code: string) {
 
 $('cfg-locale').addEventListener('change', () => {
   syncTextsFromLocale(($('cfg-locale') as HTMLSelectElement).value)
-  initModal()
+  renderCategories()
+  generateCode()
 })
 
 // Toolbar buttons
 $('btn-show').addEventListener('click', () => { initModal(); modal.show() })
 $('btn-settings').addEventListener('click', () => { initModal(); modal.showSettings() })
-$('btn-apply').addEventListener('click', () => initModal())
 $('btn-reset').addEventListener('click', () => {
   const name = ($('cfg-cookie') as HTMLInputElement).value
   document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/`
@@ -356,5 +389,5 @@ $('copy-code').addEventListener('click', () => {
 
 // ── Init ──
 renderCategories()
-initModal()
+generateCode()
 })()

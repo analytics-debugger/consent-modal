@@ -1,5 +1,5 @@
 // No global CSS import — styles are injected into Shadow DOM
-import type { ConsentModalOptions, ConsentState, ConsentCategory, ConsentTexts, GCMMapping, ConsentLocale } from './types'
+import type { ConsentModalOptions, ConsentState, ConsentCategory, ConsentCategoryTranslation, ConsentTexts, GCMMapping, ConsentLocale } from './types'
 import { getCookie, setCookie } from './cookies'
 import { fireConsentDefault, fireConsentUpdate } from './gcm'
 import { createDOM } from './render'
@@ -89,18 +89,17 @@ export class ConsentModal {
     return texts
   }
 
-  private resolveCategories(): ConsentCategory[] {
+  private resolveCategories(): (ConsentCategory & ConsentCategoryTranslation)[] {
     const localeData = this.getLocaleData()
-    if (!localeData?.categories) return this.opts.categories
 
     return this.opts.categories.map(cat => {
-      const translation = localeData.categories![cat.key]
-      if (!translation) return cat
+      const translation = localeData?.categories?.[cat.key]
       return {
         ...cat,
-        label: translation.label,
-        sublabel: translation.sublabel ?? cat.sublabel,
-        description: translation.description,
+        label: translation?.label || cat.key,
+        description: translation?.description || '',
+        sublabel: translation?.sublabel,
+        emoji: translation?.emoji,
       }
     })
   }

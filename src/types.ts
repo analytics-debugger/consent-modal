@@ -1,9 +1,5 @@
 export interface ConsentCategory {
   key: string
-  label: string
-  sublabel?: string
-  description: string
-  emoji?: string
   locked?: boolean
   default?: boolean
 }
@@ -15,8 +11,7 @@ export interface ConsentState {
 export interface ConsentTexts {
   heading?: string
   subheading?: string
-  descriptionP1?: string
-  descriptionP2?: string
+  description?: string
   acceptAll?: string
   rejectAll?: string
   customize?: string
@@ -32,6 +27,7 @@ export interface ConsentCategoryTranslation {
   label: string
   sublabel?: string
   description: string
+  emoji?: string
 }
 
 export interface ConsentLocale extends ConsentTexts {

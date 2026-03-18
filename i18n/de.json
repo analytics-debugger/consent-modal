@@ -1,8 +1,6 @@
 {
   "heading": "Datenschutz zuerst",
   "subheading": "Wir respektieren Ihre Privatsphäre und geben Ihnen volle Kontrolle",
-  "descriptionP1": "Diese Website verwendet Cookies, um reibungslos zu funktionieren und uns zu helfen, uns zu verbessern. Wir verwenden nur das Nötige — keine versteckten Tracker, keine Überraschungen.",
-  "descriptionP2": "Sie können alles akzeptieren, nicht-essentielle Cookies ablehnen oder Ihre Einstellungen anpassen.",
   "acceptAll": "Alle akzeptieren ✓",
   "rejectAll": "Alle ablehnen",
   "customize": "Anpassen",
@@ -15,17 +13,21 @@
   "categories": {
     "necessary": {
       "label": "Notwendig",
-      "description": "Halten die Website funktionsfähig. Immer aktiv."
+      "description": "Halten die Website funktionsfähig. Immer aktiv.",
+      "emoji": "🛡️"
     },
     "analytics": {
       "label": "Statistiken",
       "sublabel": "Leistungs-Cookies",
-      "description": "Helfen uns zu verstehen, wie die Website genutzt wird."
+      "description": "Helfen uns zu verstehen, wie die Website genutzt wird.",
+      "emoji": "📊"
     },
     "marketing": {
       "label": "Marketing",
       "sublabel": "Targeting-Cookies",
-      "description": "Für personalisierte Werbung verwendet."
+      "description": "Für personalisierte Werbung verwendet.",
+      "emoji": "🎯"
     }
-  }
+  },
+  "description": "<p>Diese Website verwendet Cookies, um reibungslos zu funktionieren und uns zu helfen, uns zu verbessern. Wir verwenden nur das Nötige — keine versteckten Tracker, keine Überraschungen.</p><p>Sie können alles akzeptieren, nicht-essentielle Cookies ablehnen oder Ihre Einstellungen anpassen.</p>"
 }

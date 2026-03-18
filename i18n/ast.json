@@ -1,8 +1,6 @@
 {
   "heading": "La privacidá primero",
   "subheading": "Respetamos la to privacidá y dámoste control total",
-  "descriptionP1": "Esti sitiu web usa cookies pa funcionar correutamente y ayudanos a ameyorar. Namás usamos les necesaries — ensin rastrexadores tapecíos, ensin sorpreses.",
-  "descriptionP2": "Pues aceutar too, refugar les cookies non esenciales, o personalizar les tos preferencies.",
   "acceptAll": "Aceutar too ✓",
   "rejectAll": "Refugar too",
   "customize": "Personalizar",
@@ -15,17 +13,21 @@
   "categories": {
     "necessary": {
       "label": "Esenciales",
-      "description": "Caltienen el sitiu web funcional. Siempre actives."
+      "description": "Caltienen el sitiu web funcional. Siempre actives.",
+      "emoji": "🛡️"
     },
     "analytics": {
       "label": "Estadístiques",
       "sublabel": "Cookies de rendimientu",
-      "description": "Ayúdennos a entender cómo s'usa el sitiu web."
+      "description": "Ayúdennos a entender cómo s'usa el sitiu web.",
+      "emoji": "📊"
     },
     "marketing": {
       "label": "Personalización",
       "sublabel": "Cookies de segmentación",
-      "description": "Usaes pa publicidá personalizada."
+      "description": "Usaes pa publicidá personalizada.",
+      "emoji": "🎯"
     }
-  }
+  },
+  "description": "<p>Esti sitiu web usa cookies pa funcionar correutamente y ayudanos a ameyorar. Namás usamos les necesaries — ensin rastrexadores tapecíos, ensin sorpreses.</p><p>Pues aceutar too, refugar les cookies non esenciales, o personalizar les tos preferencies.</p>"
 }

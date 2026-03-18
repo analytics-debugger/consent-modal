@@ -1,8 +1,6 @@
 {
   "heading": "Pribatutasuna lehenik",
   "subheading": "Zure pribatutasuna errespetatzen dugu eta kontrol osoa ematen dizugu",
-  "descriptionP1": "Webgune honek cookieak erabiltzen ditu ondo funtzionatzeko eta hobetzen laguntzeko. Beharrezkoak bakarrik erabiltzen ditugu — ez dago ezkutuko jarraitzailerik.",
-  "descriptionP2": "Guztiak onartu, ez-ezinbesteko cookieak baztertu edo zure lehentasunak pertsonalizatu ditzakezu.",
   "acceptAll": "Guztiak onartu ✓",
   "rejectAll": "Guztiak baztertu",
   "customize": "Pertsonalizatu",
@@ -15,17 +13,21 @@
   "categories": {
     "necessary": {
       "label": "Ezinbestekoak",
-      "description": "Webgunea funtzionatzen mantentzen dute. Beti aktibatuta."
+      "description": "Webgunea funtzionatzen mantentzen dute. Beti aktibatuta.",
+      "emoji": "🛡️"
     },
     "analytics": {
       "label": "Estatistikak",
       "sublabel": "Errendimendu cookieak",
-      "description": "Webgunea nola erabiltzen den ulertzen laguntzen digute."
+      "description": "Webgunea nola erabiltzen den ulertzen laguntzen digute.",
+      "emoji": "📊"
     },
     "marketing": {
       "label": "Pertsonalizazioa",
       "sublabel": "Segmentazio cookieak",
-      "description": "Publizitate pertsonalizaturako erabiltzen dira."
+      "description": "Publizitate pertsonalizaturako erabiltzen dira.",
+      "emoji": "🎯"
     }
-  }
+  },
+  "description": "<p>Webgune honek cookieak erabiltzen ditu ondo funtzionatzeko eta hobetzen laguntzeko. Beharrezkoak bakarrik erabiltzen ditugu — ez dago ezkutuko jarraitzailerik.</p><p>Guztiak onartu, ez-ezinbesteko cookieak baztertu edo zure lehentasunak pertsonalizatu ditzakezu.</p>"
 }

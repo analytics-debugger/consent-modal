@@ -6,10 +6,19 @@ function makeOptions(overrides: Partial<ConsentModalOptions> = {}): ConsentModal
   return {
     autoShow: false,
     categories: [
-      { key: 'necessary', label: 'Necessary', description: 'Required cookies', locked: true },
-      { key: 'analytics', label: 'Analytics', description: 'Analytics cookies', default: false },
-      { key: 'marketing', label: 'Marketing', description: 'Marketing cookies', default: false },
+      { key: 'necessary', locked: true },
+      { key: 'analytics', default: false },
+      { key: 'marketing', default: false },
     ],
+    locales: {
+      en: {
+        categories: {
+          necessary: { label: 'Necessary', description: 'Required cookies' },
+          analytics: { label: 'Analytics', description: 'Analytics cookies' },
+          marketing: { label: 'Marketing', description: 'Marketing cookies' },
+        },
+      },
+    },
     ...overrides,
   }
 }
@@ -386,14 +395,19 @@ describe('ConsentModal', () => {
   // --- showSettings ---
 
   it('showSettings opens details screen', () => {
+    vi.useFakeTimers()
+    const rafSpy = vi.spyOn(window, 'requestAnimationFrame').mockImplementation((cb) => { cb(0); return 0 })
     const modal = new ConsentModal(makeOptions())
     modal.showSettings()
+    vi.advanceTimersByTime(200)
 
     const shadow = document.body.querySelector('#consent-modal-root')!.shadowRoot!
     const mainScreen = shadow.querySelector('[data-consent-screen="main"]') as HTMLElement
     const detailsScreen = shadow.querySelector('[data-consent-screen="details"]') as HTMLElement
     expect(mainScreen.style.display).toBe('none')
     expect(detailsScreen.style.display).toBe('')
+    rafSpy.mockRestore()
+    vi.useRealTimers()
   })
 
   it('showSettings loads saved state', () => {
@@ -406,26 +420,37 @@ describe('ConsentModal', () => {
   // --- Customize screen navigation ---
 
   it('customize button switches to details', () => {
+    vi.useFakeTimers()
+    const rafSpy = vi.spyOn(window, 'requestAnimationFrame').mockImplementation((cb) => { cb(0); return 0 })
     const modal = new ConsentModal(makeOptions())
     modal.show()
 
     const shadow = document.body.querySelector('#consent-modal-root')!.shadowRoot!
     ;(shadow.querySelector('[data-consent-customize]') as HTMLElement).click()
+    vi.advanceTimersByTime(200)
 
     const mainScreen = shadow.querySelector('[data-consent-screen="main"]') as HTMLElement
     expect(mainScreen.style.display).toBe('none')
+    rafSpy.mockRestore()
+    vi.useRealTimers()
   })
 
   it('back button returns to main', () => {
+    vi.useFakeTimers()
+    const rafSpy = vi.spyOn(window, 'requestAnimationFrame').mockImplementation((cb) => { cb(0); return 0 })
     const modal = new ConsentModal(makeOptions())
     modal.show()
 
     const shadow = document.body.querySelector('#consent-modal-root')!.shadowRoot!
     ;(shadow.querySelector('[data-consent-customize]') as HTMLElement).click()
+    vi.advanceTimersByTime(200)
     ;(shadow.querySelector('[data-consent-back]') as HTMLElement).click()
+    vi.advanceTimersByTime(200)
 
     const mainScreen = shadow.querySelector('[data-consent-screen="main"]') as HTMLElement
     expect(mainScreen.style.display).toBe('')
+    rafSpy.mockRestore()
+    vi.useRealTimers()
   })
 
   // --- destroy ---
@@ -449,13 +474,16 @@ describe('ConsentModal', () => {
   })
 
   it('responds to consent-modal:settings event', () => {
+    vi.useFakeTimers()
     const rafSpy = vi.spyOn(window, 'requestAnimationFrame').mockImplementation((cb) => { cb(0); return 0 })
     new ConsentModal(makeOptions())
     window.dispatchEvent(new Event('consent-modal:settings'))
+    vi.advanceTimersByTime(200)
     const shadow = document.body.querySelector('#consent-modal-root')!.shadowRoot!
     const details = shadow.querySelector('[data-consent-screen="details"]') as HTMLElement
     expect(details.style.display).toBe('')
     rafSpy.mockRestore()
+    vi.useRealTimers()
   })
 
   // --- Logo & privacy URL ---
@@ -509,8 +537,8 @@ describe('ConsentModal', () => {
   it('respects default: true on categories', () => {
     const modal = new ConsentModal(makeOptions({
       categories: [
-        { key: 'necessary', label: 'N', description: 'n', locked: true },
-        { key: 'analytics', label: 'A', description: 'a', default: true },
+        { key: 'necessary', locked: true },
+        { key: 'analytics', default: true },
       ],
     }))
     expect(modal.getState().analytics).toBe(true)

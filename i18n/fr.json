@@ -1,8 +1,6 @@
 {
   "heading": "Votre vie privée d'abord",
   "subheading": "Nous respectons votre vie privée et vous donnons un contrôle total",
-  "descriptionP1": "Ce site utilise des cookies pour fonctionner correctement et nous aider à nous améliorer. Nous n'utilisons que le nécessaire — pas de traqueurs cachés, pas de surprises.",
-  "descriptionP2": "Vous pouvez tout accepter, refuser les cookies non essentiels, ou personnaliser vos préférences.",
   "acceptAll": "Tout accepter ✓",
   "rejectAll": "Tout refuser",
   "customize": "Personnaliser",
@@ -15,17 +13,21 @@
   "categories": {
     "necessary": {
       "label": "Essentiels",
-      "description": "Maintiennent le site fonctionnel. Toujours actifs."
+      "description": "Maintiennent le site fonctionnel. Toujours actifs.",
+      "emoji": "🛡️"
     },
     "analytics": {
       "label": "Statistiques",
       "sublabel": "Cookies de performance",
-      "description": "Nous aident à comprendre comment le site est utilisé."
+      "description": "Nous aident à comprendre comment le site est utilisé.",
+      "emoji": "📊"
     },
     "marketing": {
       "label": "Marketing",
       "sublabel": "Cookies de ciblage",
-      "description": "Utilisés pour la publicité personnalisée."
+      "description": "Utilisés pour la publicité personnalisée.",
+      "emoji": "🎯"
     }
-  }
+  },
+  "description": "<p>Ce site utilise des cookies pour fonctionner correctement et nous aider à nous améliorer. Nous n'utilisons que le nécessaire — pas de traqueurs cachés, pas de surprises.</p><p>Vous pouvez tout accepter, refuser les cookies non essentiels, ou personnaliser vos préférences.</p>"
 }

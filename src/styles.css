@@ -24,6 +24,7 @@
 .cm-logo{height:1.5rem;width:auto;margin:0 auto .75rem;display:block}
 .cm-heading{font-size:1.125rem;font-weight:700;color:var(--t);margin:0 0 .25rem}
 .cm-subheading{font-size:.875rem;color:var(--t4);margin:0}
+[data-consent-screen]{transition:opacity .15s,transform .15s}
 .cm-desc{background:var(--s);border-radius:1rem;padding:1.25rem;margin-bottom:1rem}
 .cm-desc p{font-size:.875rem;color:var(--t2);line-height:1.6;margin:0 0 .75rem}
 .cm-desc p:last-child{margin-bottom:0}

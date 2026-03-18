@@ -1,8 +1,6 @@
 {
   "heading": "隐私优先",
   "subheading": "我们尊重您的隐私，并给予您完全的控制权",
-  "descriptionP1": "本网站使用 Cookie 以确保正常运行并帮助我们改进。我们只使用必要的——没有隐藏的追踪器，没有意外。",
-  "descriptionP2": "您可以接受全部、拒绝非必要 Cookie，或自定义您的偏好设置。",
   "acceptAll": "全部接受 ✓",
   "rejectAll": "全部拒绝",
   "customize": "自定义设置",
@@ -15,17 +13,21 @@
   "categories": {
     "necessary": {
       "label": "必要",
-      "description": "维持网站正常运行——记住您的偏好、保持会话安全、确保页面正确加载。始终开启。"
+      "description": "维持网站正常运行——记住您的偏好、保持会话安全、确保页面正确加载。始终开启。",
+      "emoji": "🛡️"
     },
     "analytics": {
       "label": "分析统计",
       "sublabel": "性能 Cookie",
-      "description": "帮助我们了解网站的使用情况——哪些页面有用、访客来自哪里、以及我们可以改进的地方。"
+      "description": "帮助我们了解网站的使用情况——哪些页面有用、访客来自哪里、以及我们可以改进的地方。",
+      "emoji": "📊"
     },
     "marketing": {
       "label": "个性化",
       "sublabel": "定向 Cookie",
-      "description": "用于个性化广告和再营销。您的选择使您完全掌控。"
+      "description": "用于个性化广告和再营销。您的选择使您完全掌控。",
+      "emoji": "🎯"
     }
-  }
+  },
+  "description": "<p>本网站使用 Cookie 以确保正常运行并帮助我们改进。我们只使用必要的——没有隐藏的追踪器，没有意外。</p><p>您可以接受全部、拒绝非必要 Cookie，或自定义您的偏好设置。</p>"
 }
