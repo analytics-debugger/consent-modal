@@ -323,7 +323,7 @@ describe('ConsentModal', () => {
 
   it('setLocale changes locale and rebuilds DOM', () => {
     const modal = new ConsentModal(makeOptions({
-      locale: 'en',
+      defaultLocale: 'en',
       locales: {
         en: { texts: { heading: 'English' } },
         es: { texts: { heading: 'Espanol' } },
@@ -367,7 +367,7 @@ describe('ConsentModal', () => {
 
   it('resolves category translations from locale', () => {
     const modal = new ConsentModal(makeOptions({
-      locale: 'es',
+      defaultLocale: 'es',
       locales: {
         es: {
           categories: {

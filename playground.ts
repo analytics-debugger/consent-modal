@@ -22,6 +22,9 @@ await Promise.all(localeCodes.map(async (code) => {
   locales[code] = await res.json()
 }))
 
+// Snapshot English defaults for diff comparison in code generation
+const enDefaults = { ...locales['en']?.texts }
+
 // ── Helpers ──
 
 const $ = (id: string) => document.getElementById(id)!
@@ -80,7 +83,22 @@ function generateCode() {
   }).join(',\n')
 
   const logoLine = logo ? `\n  logoUrl: '${logo}',` : ''
-  const localeLine = locale !== 'en' ? `\n  locale: '${locale}',` : ''
+  const localeLine = locale !== 'en' ? `\n  defaultLocale: '${locale}',` : ''
+
+  syncTextsToLocale()
+  let localesBlock = ''
+  const currentTexts = locales[locale]?.texts as Record<string, string> | undefined
+  if (currentTexts) {
+    // For English, only include texts that differ from built-in defaults
+    const defaultTexts = locale === 'en' ? enDefaults : {}
+    const textEntries = Object.entries(currentTexts)
+      .filter(([k, val]) => val && val !== (defaultTexts as any)[k])
+      .map(([k, val]) => `      ${k}: '${val.replace(/'/g, "\\'")}'`)
+      .join(',\n')
+    if (textEntries) {
+      localesBlock = `\n  locales: {\n    '${locale}': {\n      texts: {\n${textEntries}\n      }\n    }\n  },`
+    }
+  }
 
   $('code-esm').textContent = `import { createConsentModal } from '@analytics-debugger/consent-modal'
 
@@ -93,7 +111,7 @@ ${catLines}
   privacyPolicyUrl: '${privacy}',
   accentColor: '${accent}',${logoLine}${localeLine}
   darkMode: ${darkMode},
-  autoShow: true,
+  autoShow: true,${localesBlock}
   onChange: (state) => console.log('Consent changed:', state),
 })`
 
@@ -108,14 +126,35 @@ ${catLines.replace(/^/gm, '  ')}
     privacyPolicyUrl: '${privacy}',
     accentColor: '${accent}',${logoLine}${localeLine}
     darkMode: ${darkMode},
-    autoShow: true,
+    autoShow: true,${localesBlock.replace(/^/gm, '  ')}
   })
 <\/script>`
 }
 
 // ── Build config from UI ──
 
+function syncTextsToLocale() {
+  const code = ($('cfg-locale') as HTMLSelectElement).value
+  if (!locales[code]) locales[code] = {}
+  locales[code].texts = {
+    heading: ($('txt-heading') as HTMLInputElement).value,
+    subheading: ($('txt-subheading') as HTMLInputElement).value,
+    descriptionP1: ($('txt-p1') as HTMLTextAreaElement).value,
+    descriptionP2: ($('txt-p2') as HTMLTextAreaElement).value,
+    acceptAll: ($('txt-accept') as HTMLInputElement).value,
+    rejectAll: ($('txt-reject') as HTMLInputElement).value,
+    customize: ($('txt-customize') as HTMLInputElement).value,
+    customizeHeading: ($('txt-customizeHeading') as HTMLInputElement).value,
+    customizeSubheading: ($('txt-customizeSubheading') as HTMLInputElement).value,
+    saveChoices: ($('txt-saveChoices') as HTMLInputElement).value,
+    back: ($('txt-back') as HTMLInputElement).value,
+    footerText: ($('txt-footerText') as HTMLInputElement).value,
+    privacyPolicyLink: ($('txt-privacyPolicyLink') as HTMLInputElement).value,
+  }
+}
+
 function getConfig() {
+  syncTextsToLocale()
   const darkVal = ($('cfg-darkmode') as HTMLSelectElement).value
   return {
     categories: categories.filter(c => c.key && c.label),
@@ -127,24 +166,9 @@ function getConfig() {
     autoShow: false,
     darkMode: darkVal === 'auto' ? 'auto' as const : darkVal === 'true',
     blockNavigation: switchState($('cfg-blocknavigation')),
-    locale: ($('cfg-locale') as HTMLSelectElement).value,
+    defaultLocale: ($('cfg-locale') as HTMLSelectElement).value,
     detectLocale: switchState($('cfg-detectlocale')),
     locales,
-    texts: {
-      heading: ($('txt-heading') as HTMLInputElement).value,
-      subheading: ($('txt-subheading') as HTMLInputElement).value,
-      descriptionP1: ($('txt-p1') as HTMLTextAreaElement).value,
-      descriptionP2: ($('txt-p2') as HTMLTextAreaElement).value,
-      acceptAll: ($('txt-accept') as HTMLInputElement).value,
-      rejectAll: ($('txt-reject') as HTMLInputElement).value,
-      customize: ($('txt-customize') as HTMLInputElement).value,
-      customizeHeading: ($('txt-customizeHeading') as HTMLInputElement).value,
-      customizeSubheading: ($('txt-customizeSubheading') as HTMLInputElement).value,
-      saveChoices: ($('txt-saveChoices') as HTMLInputElement).value,
-      back: ($('txt-back') as HTMLInputElement).value,
-      footerText: ($('txt-footerText') as HTMLInputElement).value,
-      privacyPolicyLink: ($('txt-privacyPolicyLink') as HTMLInputElement).value,
-    },
     gcmMappings: {
       ad_storage: ($('gcm-ad_storage') as HTMLInputElement).value,
       analytics_storage: ($('gcm-analytics_storage') as HTMLInputElement).value,
@@ -254,6 +278,11 @@ $('add-category').addEventListener('click', () => {
   generateCode()
 })
 
+// Real-time config updates on any input change
+document.querySelectorAll('.sidebar input, .sidebar textarea, .sidebar select').forEach(el => {
+  el.addEventListener('input', () => generateCode())
+})
+
 // Color sync
 $('cfg-color-picker').addEventListener('input', (e) => { ($('cfg-color') as HTMLInputElement).value = (e.target as HTMLInputElement).value })
 $('cfg-color').addEventListener('input', (e) => {
@@ -265,8 +294,33 @@ document.querySelectorAll('.switch').forEach(btn => {
   btn.addEventListener('click', () => toggleSwitch(btn))
 })
 
-// Locale change triggers rebuild
-$('cfg-locale').addEventListener('change', () => initModal())
+// Locale change: update text inputs from locale data, then rebuild
+function syncTextsFromLocale(code: string) {
+  const data = locales[code]?.texts || {}
+  const map: Record<string, string> = {
+    'txt-heading': data.heading || '',
+    'txt-subheading': data.subheading || '',
+    'txt-p1': data.descriptionP1 || '',
+    'txt-p2': data.descriptionP2 || '',
+    'txt-accept': data.acceptAll || '',
+    'txt-reject': data.rejectAll || '',
+    'txt-customize': data.customize || '',
+    'txt-customizeHeading': data.customizeHeading || '',
+    'txt-customizeSubheading': data.customizeSubheading || '',
+    'txt-saveChoices': data.saveChoices || '',
+    'txt-back': data.back || '',
+    'txt-footerText': data.footerText || '',
+    'txt-privacyPolicyLink': data.privacyPolicyLink || '',
+  }
+  for (const [id, val] of Object.entries(map)) {
+    if (val) ($(id) as HTMLInputElement).value = val
+  }
+}
+
+$('cfg-locale').addEventListener('change', () => {
+  syncTextsFromLocale(($('cfg-locale') as HTMLSelectElement).value)
+  initModal()
+})
 
 // Toolbar buttons
 $('btn-show').addEventListener('click', () => { initModal(); modal.show() })

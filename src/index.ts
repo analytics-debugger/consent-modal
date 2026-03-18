@@ -31,7 +31,7 @@ export class ConsentModal {
     }
 
     this.gcmMappings = this.opts.gcmMappings || DEFAULT_GCM_MAPPINGS
-    this.currentLocale = this.opts.locale || (this.opts.detectLocale ? this.detectLocale() : 'en')
+    this.currentLocale = this.opts.defaultLocale || (this.opts.detectLocale ? this.detectLocale() : 'en')
 
     // Initialize state from categories
     for (const cat of this.opts.categories) {
@@ -83,11 +83,8 @@ export class ConsentModal {
   }
 
   private resolveTexts(): ConsentTexts {
-    const base = this.opts.texts || {}
     const localeData = this.getLocaleData()
-    if (!localeData?.texts) return base
-    // Locale texts override base texts
-    return { ...base, ...localeData.texts }
+    return localeData?.texts || {}
   }
 
   private resolveCategories(): ConsentCategory[] {

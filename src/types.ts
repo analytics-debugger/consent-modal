@@ -58,8 +58,7 @@ export interface ConsentModalOptions {
   cookieSecure?: boolean
   privacyPolicyUrl?: string
   logoUrl?: string
-  texts?: ConsentTexts
-  locale?: string
+  defaultLocale?: string
   locales?: Record<string, ConsentLocale>
   detectLocale?: boolean
   gcmMappings?: GCMMapping
